@@ -43,18 +43,14 @@ public class MoveAction : BaseAction
         transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotateSpeed);
     }
 
-    public void Move(GridPosition gridPosition, Action onActionComplete)
+    public override void TakeAction(GridPosition gridPosition, Action onActionComplete)
     {
         this.onActionComplete = onActionComplete;
         this.targetPosition = LevelGrid.Instance.GetWorldPosition(gridPosition);
         isActive = true;
     }
-    public bool IsValidActionGridPos(GridPosition gridPosition)
-    {
-        List<GridPosition> validGridPositionList = GetValidGridPositionList();
-        return validGridPositionList.Contains(gridPosition);
-    }
-    public  List<GridPosition> GetValidGridPositionList()
+
+    public override List<GridPosition> GetValidGridPositionList()
     {
         List<GridPosition> validGridPositionList = new List<GridPosition>();
 
