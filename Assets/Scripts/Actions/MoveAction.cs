@@ -85,12 +85,13 @@ public class MoveAction : BaseAction
                 validGridPositionList.Add(testGridPosition);
                 
             }
-        }
-            
-
-
-
+        }           
 
         return validGridPositionList;
+    }
+
+    public override string GetActionName()
+    {
+        return "Move";
     }
 }
