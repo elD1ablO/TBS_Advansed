@@ -14,5 +14,9 @@ public class ActionButtonUI : MonoBehaviour
     {
         textMeshPro.text = baseAction.GetActionName().ToUpper();
 
+        button.onClick.AddListener(() =>
+        {
+            UnitActionSystem.Instance.SetSelectedAction(baseAction);
+        });
     }
 }
