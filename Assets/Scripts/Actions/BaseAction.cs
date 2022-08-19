@@ -1,3 +1,4 @@
+using Mono.Cecil;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -25,4 +26,9 @@ public abstract class BaseAction : MonoBehaviour
     }
 
     public abstract List<GridPosition> GetValidGridPositionList();
+
+    public virtual int GetActionPointsCost()
+    {
+        return 1;
+    }
 }

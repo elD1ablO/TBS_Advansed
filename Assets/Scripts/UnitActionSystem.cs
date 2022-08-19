@@ -11,6 +11,7 @@ public class UnitActionSystem : MonoBehaviour
     public event EventHandler OnSelectedUnitChange;
     public event EventHandler OnSelectedActionChange;
     public event EventHandler<bool> OnBusyChange;
+    public event EventHandler OnActionStarted;
 
     [SerializeField] Unit selectedUnit;
     [SerializeField] LayerMask unitLayerMask;
@@ -50,11 +51,14 @@ public class UnitActionSystem : MonoBehaviour
         {
             GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition());
 
-            if(selectedAction.IsValidActionGridPos(mouseGridPosition))
-            {
-                SetBusy();
-                selectedAction.TakeAction(mouseGridPosition, ClearBusy);
-            }
+            if (!selectedAction.IsValidActionGridPos(mouseGridPosition)) return;
+
+            if (!selectedUnit.TrySpendActionPoints(selectedAction)) return;
+                
+            SetBusy();
+            selectedAction.TakeAction(mouseGridPosition, ClearBusy);
+
+            OnActionStarted?.Invoke(this, EventArgs.Empty);   
         }
     }
 
