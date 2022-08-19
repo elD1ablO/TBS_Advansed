@@ -10,7 +10,7 @@ public class UnitActionSystem : MonoBehaviour
 
     public event EventHandler OnSelectedUnitChange;
     public event EventHandler OnSelectedActionChange;
-    public event EventHandler<bool> OnBusyChange;
+    public event EventHandler <bool> OnBusyChange;
     public event EventHandler OnActionStarted;
 
     [SerializeField] Unit selectedUnit;
