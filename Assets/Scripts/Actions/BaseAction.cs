@@ -1,4 +1,3 @@
-using Mono.Cecil;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -30,5 +29,17 @@ public abstract class BaseAction : MonoBehaviour
     public virtual int GetActionPointsCost()
     {
         return 1;
+    }
+
+    protected void ActionStart(Action onActionComplete)
+    {
+        isActive = true;
+        this.onActionComplete = onActionComplete;
+    }
+
+    protected void ActionComplete()
+    {
+        isActive = false;
+        onActionComplete();
     }
 }
