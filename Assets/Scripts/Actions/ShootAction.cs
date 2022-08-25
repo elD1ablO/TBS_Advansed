@@ -86,7 +86,7 @@ public class ShootAction : BaseAction
             targetUnit = targetUnit,
             shootingUnit = unit,
         });
-        targetUnit.GetDamage();
+        targetUnit.Damage(40);
     }
 
     public override string GetActionName()
@@ -120,9 +120,6 @@ public class ShootAction : BaseAction
                     continue;
                 }
 
-                /*validGridPositionList.Add(testGridPosition);
-                continue;*/
-
                 if (!LevelGrid.Instance.IsOccupied(testGridPosition))
                 {
                     //grid position is empty, nobody to shoot at 
@@ -145,7 +142,7 @@ public class ShootAction : BaseAction
 
     public override int GetActionPointsCost()
     {
-        return 2;
+        return 1;
     }
 
     public override void TakeAction(GridPosition gridPosition, Action onActionComplete)
