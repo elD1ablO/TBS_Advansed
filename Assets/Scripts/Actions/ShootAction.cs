@@ -65,12 +65,12 @@ public class ShootAction : BaseAction
         {
             case State.Aiming:                
                 state = State.Shooting;
-                float shootingStateTime = 0.1f;
+                float shootingStateTime = 0.2f;
                 stateTimer = shootingStateTime;                
                 break;
             case State.Shooting:
                 state = State.Cooloff;
-                float cooloffStateTime = 0.3f;
+                float cooloffStateTime = 0.4f;
                 stateTimer = cooloffStateTime;                
                 break;
             case State.Cooloff:
@@ -147,13 +147,18 @@ public class ShootAction : BaseAction
 
     public override void TakeAction(GridPosition gridPosition, Action onActionComplete)
     {
-        ActionStart(onActionComplete);
-
         targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(gridPosition);
 
         state = State.Aiming;
         float aimingStateTime = 1f;
         stateTimer = aimingStateTime;
         canShoot = true;
+        
+        ActionStart(onActionComplete);
+    }
+
+    public Unit GetTargetUnit()
+    {
+        return targetUnit;
     }
 }
