@@ -7,14 +7,13 @@ public class Test : MonoBehaviour
 {
     [SerializeField] Unit unit;
 
-    private void Update()
+    /*private void Update()
     {
         if (Input.GetKeyDown(KeyCode.T))
         {
             GridSystemVisual.Instance.HideAllGridPositions();
             GridSystemVisual.Instance.ShowGidPositionList(unit.GetMoveAction().GetValidGridPositionList());
         }
-    }
-
+    }*/
 
 }
