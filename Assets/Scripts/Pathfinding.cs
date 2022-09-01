@@ -7,14 +7,15 @@ public class Pathfinding : MonoBehaviour
 {
     public static Pathfinding Instance { get; private set; }
 
+    [SerializeField] LayerMask obstaclesLayerMask;
+    [SerializeField] Transform gridDebugPrefab;
+
     const int MOVE_STRAINGT_COST = 10;
     const int MOVE_DIAGONAL_COST = 14;
 
-    [SerializeField] Transform gridDebugPrefab;
     int width;
     int height;
     float cellSize;
-
     GridSystem<PathNode> gridSystem;
 
     void Awake()
@@ -25,9 +26,29 @@ public class Pathfinding : MonoBehaviour
             return;
         }
         Instance = this;
+    }
+    public void Setup(int width, int height, float cellSize)
+    {
+        this.width = width;
+        this.height = height;
+        this.cellSize = cellSize;
 
-        gridSystem = new GridSystem<PathNode>(10, 10, 2f, (GridSystem<PathNode> g, GridPosition gridPosition) => new PathNode(gridPosition));
+        gridSystem = new GridSystem<PathNode>(width, height, cellSize, (GridSystem<PathNode> g, GridPosition gridPosition) => new PathNode(gridPosition));
         gridSystem.CreateDebugObjects(gridDebugPrefab);
+
+        for (int x = 0; x < width; x++)
+        {
+            for (int z = 0; z < height; z++)
+            {
+                GridPosition gridPosition = new GridPosition(x, z);
+                Vector3 worldPosition = LevelGrid.Instance.GetWorldPosition(gridPosition);
+                float raycastOffsetDistance = 5f;
+                if (Physics.Raycast(worldPosition + Vector3.down * raycastOffsetDistance, Vector3.up, raycastOffsetDistance * 2, obstaclesLayerMask))
+                {
+                    GetNode(x, z).SetIsWalkable(false);
+                }
+            }
+        } 
     }
 
     public List<GridPosition> FindPath(GridPosition startPosition, GridPosition endPosition)
@@ -73,6 +94,12 @@ public class Pathfinding : MonoBehaviour
             foreach (PathNode neighbourNode in GetNeighbourList(currentNode))
             {
                 if (closedList.Contains(neighbourNode)) continue;
+
+                if (!neighbourNode.IsWalkable())
+                {
+                    closedList.Add(neighbourNode);
+                    continue;
+                }
                 
                 int tentativeGCost = currentNode.GetGCost() + CalculateDistance(currentNode.GetGridPosition(), neighbourNode.GetGridPosition());
 
