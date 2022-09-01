@@ -11,7 +11,7 @@ public class LevelGrid : MonoBehaviour
 
     [SerializeField] Transform gridDebugPrefab;
 
-    private GridSystem gridSystem;
+    private GridSystem<GridObject> gridSystem;
 
     void Awake()
     {
@@ -22,8 +22,8 @@ public class LevelGrid : MonoBehaviour
         }
         Instance = this;
 
-        gridSystem = new GridSystem(10, 10, 2);
-        gridSystem.CreateDebugObjects(gridDebugPrefab);
+        gridSystem = new GridSystem<GridObject>(10, 10, 2, (GridSystem<GridObject> gameObject, GridPosition gridPosition) => new GridObject(gameObject, gridPosition));
+        //gridSystem.CreateDebugObjects(gridDebugPrefab);
     }
 
     public void AddUnitAtGridPosition(GridPosition gridPosition, Unit unit)
