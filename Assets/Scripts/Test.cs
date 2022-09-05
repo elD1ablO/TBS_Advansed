@@ -10,7 +10,7 @@ public class Test : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T))
+        /*if (Input.GetKeyDown(KeyCode.T))
         {
             GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition());
             GridPosition startGridPosition = new GridPosition(0, 0);
@@ -24,6 +24,6 @@ public class Test : MonoBehaviour
                                Color.white, 
                                10f);
             }
-        }
+        }*/
     }
 }
