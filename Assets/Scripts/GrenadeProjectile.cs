@@ -46,6 +46,10 @@ public class GrenadeProjectile : MonoBehaviour
                 {
                     targetUnit.Damage(damageAmount);
                 }
+                if (collider.TryGetComponent<DestructibleCrate>(out DestructibleCrate destructibleCrate))
+                {
+                    destructibleCrate.Damage();
+                }
             }
             OnAnyGrenadeExploded?.Invoke(this, EventArgs.Empty);
 
